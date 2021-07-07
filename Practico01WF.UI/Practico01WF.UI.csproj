@@ -56,11 +56,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmPlantaEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPlantaEdit.Designer.cs">
+      <DependentUpon>FrmPlantaEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPlantas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPlantas.Designer.cs">
+      <DependentUpon>FrmPlantas.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmPrincipal.Designer.cs">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTipoDeEnvaseEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTipoDeEnvaseEdit.Designer.cs">
+      <DependentUpon>FrmTipoDeEnvaseEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmTipoDePlantaEdit.cs">
       <SubType>Form</SubType>
@@ -68,19 +86,38 @@
     <Compile Include="FrmTipoDePlantaEdit.Designer.cs">
       <DependentUpon>FrmTipoDePlantaEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmTiposDeEnvases.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTiposDeEnvases.Designer.cs">
+      <DependentUpon>FrmTiposDeEnvases.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmTiposDePlantas.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmTiposDePlantas.Designer.cs">
       <DependentUpon>FrmTiposDePlantas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HelperGrid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmPlantaEdit.resx">
+      <DependentUpon>FrmPlantaEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPlantas.resx">
+      <DependentUpon>FrmPlantas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmTipoDeEnvaseEdit.resx">
+      <DependentUpon>FrmTipoDeEnvaseEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmTipoDePlantaEdit.resx">
       <DependentUpon>FrmTipoDePlantaEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTiposDeEnvases.resx">
+      <DependentUpon>FrmTiposDeEnvases.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTiposDePlantas.resx">
       <DependentUpon>FrmTiposDePlantas.cs</DependentUpon>
@@ -164,6 +201,7 @@
       <Name>Practico01WF.Servicios</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

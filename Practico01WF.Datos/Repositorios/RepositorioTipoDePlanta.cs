@@ -21,7 +21,7 @@ namespace Practico01WF.Datos.Repositorios
         {
             try
             {
-                return context.TiposDePlantas.ToList();
+                return context.TiposDePlantas.AsNoTracking().ToList();
             }
             catch (Exception e)
             {
@@ -110,6 +110,24 @@ namespace Practico01WF.Datos.Repositorios
                 throw new Exception(e.Message);
             }
 
+        }
+
+        public void Borrar(int tipoDePlantaId)
+        {
+            TipoDePlanta tipoInDb=null;
+            try
+            {
+                tipoInDb = context.TiposDePlantas
+                    .SingleOrDefault(tp => tp.TipoDePlantaId == tipoDePlantaId);
+                if (tipoInDb == null) return;
+                context.Entry(tipoInDb).State = EntityState.Deleted;
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                context.Entry(tipoInDb).State = EntityState.Unchanged;
+                throw new Exception(e.Message);
+            }
         }
     }
 }

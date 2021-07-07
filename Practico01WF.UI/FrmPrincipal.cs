@@ -27,5 +27,11 @@ namespace Practico01WF.UI
             FrmTiposDePlantas frm = new FrmTiposDePlantas();
             frm.ShowDialog(this);
         }
+
+        private void PlantasButton_Click(object sender, EventArgs e)
+        {
+            FrmPlantas frm = new FrmPlantas();
+            frm.ShowDialog(this);
+        }
     }
 }

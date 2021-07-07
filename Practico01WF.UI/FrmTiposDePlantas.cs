@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Practico01WF.Entidades;
 using Practico01WF.Servicios.Servicios;
 using Practico01WF.Servicios.Servicios.Facades;
+using Practico01WF.UI.Helpers;
 
 namespace Practico01WF.UI
 {
@@ -46,21 +47,18 @@ namespace Practico01WF.UI
 
         private void MostrarDatosEnGrilla()
         {
-            DatosDataGridView.Rows.Clear();
+            HelperGrid.LimpiarGrilla(DatosDataGridView);
             foreach (var tipoDePlanta in lista)
             {
-                DataGridViewRow r = ConstruirFila();
+                DataGridViewRow r =HelperGrid.CrearFila(DatosDataGridView);
+                
                 SetearFila(r, tipoDePlanta);
-                AgregarFila(r);
+                HelperGrid.AgregarFila(DatosDataGridView, r);
             }
 
             CantidadDeRegistrosLabel.Text = cantidadRegistros.ToString();
         }
 
-        private void AgregarFila(DataGridViewRow r)
-        {
-            DatosDataGridView.Rows.Add(r);
-        }
 
         private void SetearFila(DataGridViewRow r, TipoDePlanta tipoDePlanta)
         {
@@ -69,12 +67,6 @@ namespace Practico01WF.UI
             r.Tag = tipoDePlanta;
         }
 
-        private DataGridViewRow ConstruirFila()
-        {
-            var r = new DataGridViewRow();
-            r.CreateCells(DatosDataGridView);
-            return r;
-        }
 
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
@@ -91,9 +83,9 @@ namespace Practico01WF.UI
                         return;
                     }
                     servicio.Guardar(tipoDePlanta);
-                    DataGridViewRow r = ConstruirFila();
+                    DataGridViewRow r = HelperGrid.CrearFila(DatosDataGridView);
                     SetearFila(r, tipoDePlanta);
-                    AgregarFila(r);
+                    HelperGrid.AgregarFila(DatosDataGridView,r);
                     cantidadRegistros = servicio.GetCantidad();
                     MessageBox.Show("Registro guardado", "Mensaje",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -114,6 +106,7 @@ namespace Practico01WF.UI
 
             DataGridViewRow r = DatosDataGridView.SelectedRows[0];
             TipoDePlanta tipoDePlanta = (TipoDePlanta) r.Tag;
+            TipoDePlanta tipoDePlantaCopia =(TipoDePlanta) tipoDePlanta.Clone();
             FrmTipoDePlantaEdit frm = new FrmTipoDePlantaEdit() {Text = "Editar Tipo de Planta"};
             frm.SetTipo(tipoDePlanta);
             DialogResult dr = frm.ShowDialog(this);
@@ -127,6 +120,7 @@ namespace Practico01WF.UI
                 tipoDePlanta = frm.GetTipo();
                 if (servicio.Existe(tipoDePlanta))
                 {
+                    SetearFila(r, tipoDePlantaCopia);
                     MessageBox.Show("Tipo de Planta existente", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -138,8 +132,41 @@ namespace Practico01WF.UI
             }
             catch (Exception exception)
             {
+                SetearFila(r,tipoDePlantaCopia);
                 MessageBox.Show(exception.Message, "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void tsbBorrar_Click(object sender, EventArgs e)
+        {
+            if (DatosDataGridView.SelectedRows.Count==0)
+            {
+                return;
+            }
+
+            DataGridViewRow r = DatosDataGridView.SelectedRows[0];
+            TipoDePlanta tipoDePlanta = (TipoDePlanta) r.Tag;
+            DialogResult dr = MessageBox.Show($"¿Desea dar de baja el registro de {tipoDePlanta.Descripcion}?",
+                "Confirmar Baja",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
+            if (dr==DialogResult.No)
+            {
+                return;
+            }
+
+            try
+            {
+                servicio.Borrar(tipoDePlanta.TipoDePlantaId);
+                HelperGrid.BorrarFila(DatosDataGridView, r);
+               
+                MessageBox.Show("Registro borrado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(@"Registro relacionado... Baja denegada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

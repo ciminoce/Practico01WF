@@ -62,6 +62,7 @@ namespace Practico01WF.UI
             this.PlantasButton.TabIndex = 0;
             this.PlantasButton.Text = "Plantas";
             this.PlantasButton.UseVisualStyleBackColor = true;
+            this.PlantasButton.Click += new System.EventHandler(this.PlantasButton_Click);
             // 
             // CerrarButton
             // 

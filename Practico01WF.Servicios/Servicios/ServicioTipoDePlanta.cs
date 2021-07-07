@@ -83,5 +83,18 @@ namespace Practico01WF.Servicios.Servicios
                 throw new Exception(e.Message);
             }
         }
+
+        public void Borrar(int tipoDePlantaId)
+        {
+            try
+            {
+                repositorio.Borrar(tipoDePlantaId);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
     }
 }

@@ -57,7 +57,9 @@
     <Compile Include="EntityTypeConfigurations\TipoDeEnvaseEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfigurations\TipoDePlantaEntityTypeConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\Facades\IRepositorioPlanta.cs" />
     <Compile Include="Repositorios\Facades\IRepositorioTipoDePlanta.cs" />
+    <Compile Include="Repositorios\RepositorioPlanta.cs" />
     <Compile Include="Repositorios\RepositorioTipoDePlanta.cs" />
     <Compile Include="ViveroDbContext.cs" />
   </ItemGroup>
