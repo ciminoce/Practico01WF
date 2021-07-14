@@ -30,6 +30,18 @@ namespace Practico01WF.Servicios.Servicios
             }
         }
 
+        public List<Planta> Find(Func<Planta, bool> predicate, int registros, int pagina)
+        {
+            try
+            {
+                return repositorio.Find(predicate,registros,pagina);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public Planta GetPlantaPorId(int id)
         {
             throw new NotImplementedException();
@@ -50,6 +62,18 @@ namespace Practico01WF.Servicios.Servicios
             try
             {
                 return repositorio.GetCantidad();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public int GetCantidad(Func<Planta, bool> predicate)
+        {
+            try
+            {
+                return repositorio.GetCantidad(predicate);
             }
             catch (Exception e)
             {

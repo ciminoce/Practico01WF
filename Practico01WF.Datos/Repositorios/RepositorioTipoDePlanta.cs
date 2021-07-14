@@ -21,7 +21,9 @@ namespace Practico01WF.Datos.Repositorios
         {
             try
             {
-                return context.TiposDePlantas.AsNoTracking().ToList();
+                return context.TiposDePlantas
+                    .OrderBy(tp=>tp.Descripcion)
+                    .AsNoTracking().ToList();
             }
             catch (Exception e)
             {

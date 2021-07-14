@@ -36,6 +36,22 @@ namespace Practico01WF.Datos.Repositorios
             }
         }
 
+        public List<Planta> Find(Func<Planta, bool> predicate, int registros, int pagina)
+        {
+            try
+            {
+                return context.Plantas.Where(predicate)
+                    .OrderBy(p=>p.PlantaId)
+                    .Skip(registros*(pagina-1))
+                    .Take(registros)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public Planta GetPlantaPorId(int id)
         {
             throw new NotImplementedException();
@@ -56,6 +72,18 @@ namespace Practico01WF.Datos.Repositorios
             try
             {
                 return context.Plantas.Count();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public int GetCantidad(Func<Planta, bool> predicate)
+        {
+            try
+            {
+                return context.Plantas.Count(predicate);
             }
             catch (Exception e)
             {

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Practico01WF.UI.Helpers;
 
 namespace Practico01WF.UI
 {
@@ -15,6 +16,14 @@ namespace Practico01WF.UI
         public FrmPlantaEdit()
         {
             InitializeComponent();
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            HelperCombo.CargarDatosComboTipoEnvase(ref TipoDeEnvaseComboBox);
+            HelperCombo.CargarDatosComboTipoPlanta(ref TipoDePlantaComboBox);
+
         }
     }
 }
