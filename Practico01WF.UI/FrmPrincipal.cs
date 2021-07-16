@@ -33,5 +33,11 @@ namespace Practico01WF.UI
             FrmPlantas frm = new FrmPlantas();
             frm.ShowDialog(this);
         }
+
+        private void TiposDeEnvasesButton_Click(object sender, EventArgs e)
+        {
+            FrmTiposDeEnvases frm = new FrmTiposDeEnvases();
+            frm.ShowDialog(this);
+        }
     }
 }

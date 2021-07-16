@@ -43,8 +43,10 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\Facades\IServicioPlanta.cs" />
+    <Compile Include="Servicios\Facades\IServicioTipoDeEnvase.cs" />
     <Compile Include="Servicios\Facades\IServicioTipoDePlanta.cs" />
     <Compile Include="Servicios\ServicioPlanta.cs" />
+    <Compile Include="Servicios\ServicioTipoDeEnvase.cs" />
     <Compile Include="Servicios\ServicioTipoDePlanta.cs" />
   </ItemGroup>
   <ItemGroup>

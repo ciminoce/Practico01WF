@@ -84,6 +84,18 @@ namespace Practico01WF.Servicios.Servicios
             }
         }
 
+        public List<IGrouping<int, Planta>> GetGrupo()
+        {
+            try
+            {
+                return repositorio.GetGrupos();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public void Borrar(int tipoDePlantaId)
         {
             try

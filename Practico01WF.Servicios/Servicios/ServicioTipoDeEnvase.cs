@@ -10,19 +10,33 @@ using Practico01WF.Servicios.Servicios.Facades;
 
 namespace Practico01WF.Servicios.Servicios
 {
-    public class ServicioPlanta:IServicioPlanta
+    public class ServicioTipoDeEnvase:IServicioTipoDeEnvase
     {
-        private IRepositorioPlanta repositorio;
+        private IRepositorioTipoDeEnvase repositorio;
 
-        public ServicioPlanta()
+        public ServicioTipoDeEnvase()
         {
-            repositorio = new RepositorioPlanta();
+            repositorio = new RepositorioTipoDeEnvase();
         }
-        public List<Planta> GetLista(int registros, int pagina)
+        public List<TipoDeEnvase> GetLista()
         {
             try
             {
-                return repositorio.GetLista(registros, pagina);
+                return repositorio.GetLista();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
+
+
+        public TipoDeEnvase GetTipoDeEnvasePorId(int id)
+        {
+            try
+            {
+                return repositorio.GetTipoDeEnvasePorId(id);
             }
             catch (Exception e)
             {
@@ -30,11 +44,11 @@ namespace Practico01WF.Servicios.Servicios
             }
         }
 
-        public List<Planta> Find(Func<Planta, bool> predicate, int registros, int pagina)
+        public void Guardar(TipoDeEnvase tipoDeEnvase)
         {
             try
             {
-                return repositorio.Find(predicate,registros,pagina);
+                repositorio.Guardar(tipoDeEnvase);
             }
             catch (Exception e)
             {
@@ -42,34 +56,21 @@ namespace Practico01WF.Servicios.Servicios
             }
         }
 
-        public Planta GetPlantaPorId(int id)
+        public bool Existe(TipoDeEnvase tipoDeEnvase)
+        {
+            try
+            {
+                return repositorio.Existe(tipoDeEnvase);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public bool EstaRelacionado(TipoDeEnvase tipoDeEnvase)
         {
             throw new NotImplementedException();
-        }
-
-        public void Guardar(Planta planta)
-        {
-            try
-            {
-                repositorio.Guardar(planta);
-            }
-            catch (Exception e)
-            {
-                
-                throw new Exception(e.Message);
-            }
-        }
-
-        public bool Existe(Planta planta)
-        {
-            try
-            {
-                return repositorio.Existe(planta);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
         }
 
         public int GetCantidad()
@@ -84,11 +85,11 @@ namespace Practico01WF.Servicios.Servicios
             }
         }
 
-        public int GetCantidad(Func<Planta, bool> predicate)
+        public List<IGrouping<int, Planta>> GetGrupo()
         {
             try
             {
-                return repositorio.GetCantidad(predicate);
+                return repositorio.GetGrupos();
             }
             catch (Exception e)
             {
@@ -96,16 +97,17 @@ namespace Practico01WF.Servicios.Servicios
             }
         }
 
-        public void Borrar(int plantaId)
+        public void Borrar(int tipoDeEnvaseId)
         {
             try
             {
-                repositorio.Borrar(plantaId);
+                repositorio.Borrar(tipoDeEnvaseId);
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
+
         }
     }
 }

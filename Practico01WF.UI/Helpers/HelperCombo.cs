@@ -31,18 +31,18 @@ namespace Practico01WF.UI.Helpers
         }
         public static void CargarDatosComboTipoEnvase(ref ComboBox combo)
         {
-            //IServicioTipoDeEnvase servicio = new IServicioTipoDeEnvase();
-            //List<TipoDePlanta> lista = servicio.GetLista();
-            //TipoDePlanta defaultTipo = new TipoDePlanta()
-            //{
-            //    TipoDePlantaId = 0,
-            //    Descripcion = "<Seleccione un tipo de planta>"
-            //};
-            //lista.Insert(0, defaultTipo);
-            //combo.DataSource = lista;
-            //combo.DisplayMember = "Descripcion";
-            //combo.ValueMember = "TipoDePlantaId";
-            //combo.SelectedIndex = 0;
+            IServicioTipoDeEnvase servicio = new ServicioTipoDeEnvase();
+            List<TipoDeEnvase> lista = servicio.GetLista();
+            TipoDeEnvase defaultTipo = new TipoDeEnvase()
+            {
+                TipoDeEnvaseId = 0,
+                Descripcion = "<Seleccione un tipo de envase>"
+            };
+            lista.Insert(0, defaultTipo);
+            combo.DataSource = lista;
+            combo.DisplayMember = "Descripcion";
+            combo.ValueMember = "TipoDeEnvaseId";
+            combo.SelectedIndex = 0;
 
         }
 

@@ -187,6 +187,7 @@ namespace Practico01WF.UI
             this.tsbBuscar.Size = new System.Drawing.Size(46, 59);
             this.tsbBuscar.Text = "Buscar";
             this.tsbBuscar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbBuscar.Click += new System.EventHandler(this.tsbBuscar_Click);
             // 
             // tsbActualizar
             // 

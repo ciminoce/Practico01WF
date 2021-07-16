@@ -39,9 +39,9 @@ namespace Practico01WF.UI
                 MostrarDatosEnGrilla();
 
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -51,8 +51,8 @@ namespace Practico01WF.UI
             foreach (var tipoDePlanta in lista)
             {
                 DataGridViewRow r =HelperGrid.CrearFila(DatosDataGridView);
-                
-                SetearFila(r, tipoDePlanta);
+
+                HelperGrid.SetearFila(r, tipoDePlanta);
                 HelperGrid.AgregarFila(DatosDataGridView, r);
             }
 
@@ -60,12 +60,6 @@ namespace Practico01WF.UI
         }
 
 
-        private void SetearFila(DataGridViewRow r, TipoDePlanta tipoDePlanta)
-        {
-            r.Cells[colTipoDePlanta.Index].Value = tipoDePlanta.Descripcion;
-
-            r.Tag = tipoDePlanta;
-        }
 
 
         private void tsbNuevo_Click(object sender, EventArgs e)
@@ -84,7 +78,7 @@ namespace Practico01WF.UI
                     }
                     servicio.Guardar(tipoDePlanta);
                     DataGridViewRow r = HelperGrid.CrearFila(DatosDataGridView);
-                    SetearFila(r, tipoDePlanta);
+                    HelperGrid.SetearFila(r, tipoDePlanta);
                     HelperGrid.AgregarFila(DatosDataGridView,r);
                     cantidadRegistros = servicio.GetCantidad();
                     MessageBox.Show("Registro guardado", "Mensaje",
@@ -120,19 +114,19 @@ namespace Practico01WF.UI
                 tipoDePlanta = frm.GetTipo();
                 if (servicio.Existe(tipoDePlanta))
                 {
-                    SetearFila(r, tipoDePlantaCopia);
+                    HelperGrid.SetearFila(r, tipoDePlantaCopia);
                     MessageBox.Show("Tipo de Planta existente", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 servicio.Guardar(tipoDePlanta);
-                SetearFila(r,tipoDePlanta);
+                HelperGrid.SetearFila(r,tipoDePlanta);
                 MessageBox.Show("Registro Editado", "Mensaje",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception exception)
             {
-                SetearFila(r,tipoDePlantaCopia);
+                HelperGrid.SetearFila(r,tipoDePlantaCopia);
                 MessageBox.Show(exception.Message, "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -169,5 +163,13 @@ namespace Practico01WF.UI
                 MessageBox.Show(@"Registro relacionado... Baja denegada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void tsbBuscar_Click(object sender, EventArgs e)
+        {
+            FrmBuscarPorTipoDePlanta frm = new FrmBuscarPorTipoDePlanta() {Text = "Totales por Tipo de Planta"};
+            frm.ShowDialog(this);
+        }
+
     }
+
 }

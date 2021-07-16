@@ -1,6 +1,8 @@
+using System;
+
 namespace Practico01WF.Entidades
 {
-    public class Planta
+    public class Planta:ICloneable
     {
         public int PlantaId { get; set; }
 
@@ -17,5 +19,9 @@ namespace Practico01WF.Entidades
         public virtual TipoDeEnvase TipoDeEnvase { get; set; }
 
         public virtual TipoDePlanta TipoDePlanta { get; set; }
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

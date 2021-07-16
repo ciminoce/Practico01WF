@@ -48,6 +48,7 @@ namespace Practico01WF.UI
             this.TipoDeEnvaseComboBox.Name = "TipoDeEnvaseComboBox";
             this.TipoDeEnvaseComboBox.Size = new System.Drawing.Size(247, 21);
             this.TipoDeEnvaseComboBox.TabIndex = 31;
+            this.TipoDeEnvaseComboBox.SelectedIndexChanged += new System.EventHandler(this.TipoDeEnvaseComboBox_SelectedIndexChanged);
             // 
             // TipoDePlantaComboBox
             // 
@@ -58,6 +59,7 @@ namespace Practico01WF.UI
             this.TipoDePlantaComboBox.Name = "TipoDePlantaComboBox";
             this.TipoDePlantaComboBox.Size = new System.Drawing.Size(247, 21);
             this.TipoDePlantaComboBox.TabIndex = 32;
+            this.TipoDePlantaComboBox.SelectedIndexChanged += new System.EventHandler(this.TipoDePlantaComboBox_SelectedIndexChanged);
             // 
             // CancelButton
             // 
@@ -81,6 +83,7 @@ namespace Practico01WF.UI
             this.OkButton.Text = "OK";
             this.OkButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.OkButton.UseVisualStyleBackColor = true;
+            this.OkButton.Click += new System.EventHandler(this.OkButton_Click);
             // 
             // label3
             // 
@@ -120,6 +123,7 @@ namespace Practico01WF.UI
             this.TipoDeEnvaseRadioButton.TabIndex = 33;
             this.TipoDeEnvaseRadioButton.TabStop = true;
             this.TipoDeEnvaseRadioButton.UseVisualStyleBackColor = true;
+            this.TipoDeEnvaseRadioButton.CheckedChanged += new System.EventHandler(this.TipoDeEnvaseRadioButton_CheckedChanged);
             // 
             // FrmBuscarPlanta
             // 

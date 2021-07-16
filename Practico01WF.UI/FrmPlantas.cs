@@ -24,6 +24,9 @@ namespace Practico01WF.UI
         }
 
         private Filtro filtro = Filtro.Off;
+        private TipoDeEnvase filtroEnvase;
+        private TipoDePlanta filtroPlanta;
+
         private IServicioPlanta servicio;
         private List<Planta> lista;
         private int cantidadRegistros;
@@ -42,7 +45,7 @@ namespace Practico01WF.UI
             {
                 cantidadRegistros = servicio.GetCantidad();
                 cantidadPaginas = CalcularCantidadDePaginas(cantidadRegistros, cantidadPorPagina);
-                CrearBotonesPaginado(cantidadPaginas);
+                CrearBotonesPaginas(cantidadPaginas);
                 paginaActual = 1;
                 MostrarPaginado(cantidadPorPagina, paginaActual);
             }
@@ -52,7 +55,7 @@ namespace Practico01WF.UI
             }
         }
 
-        private void CrearBotonesPaginado(int paginas)
+        private void CrearBotonesPaginas(int paginas)
         {
             BotonesPanel.Controls.Clear();
             for (int i = 0; i < paginas; i++)
@@ -99,7 +102,7 @@ namespace Practico01WF.UI
             foreach (var planta in lista)
             {
                 var r = HelperGrid.CrearFila(DatosDataGridView);
-                SetearFila(r, planta);
+                HelperGrid.SetearFila(r, planta);
                 HelperGrid.AgregarFila(DatosDataGridView,r);
             }
 
@@ -108,14 +111,6 @@ namespace Practico01WF.UI
             PaginaActualLabel.Text = paginaActual.ToString();
         }
 
-        private void SetearFila(DataGridViewRow r, Planta planta)
-        {
-            r.Cells[colPlanta.Index].Value = planta.Descripcion;
-            r.Cells[colTipoDePlanta.Index].Value = planta.TipoDePlanta.Descripcion;
-            r.Cells[colTipoEnvase.Index].Value = planta.TipoDeEnvase.Descripcion;
-
-            r.Tag = planta;
-        }
 
         private void tsbCerrar_Click(object sender, EventArgs e)
         {
@@ -127,10 +122,14 @@ namespace Practico01WF.UI
             {
                 lista = servicio.GetLista(cantidadPorPagina, paginaActual);
             }
-            else
+            else if(filtro==Filtro.TipoEnvase)
             {
-                //lista = servicio.Find(p => p.TipoDePlantaId == 1, cantidadPorPagina, paginaActual);
-                lista = servicio.Find(p => p.TipoDeEnvaseId == 1, cantidadPorPagina, paginaActual);
+                lista = servicio.Find(p => p.TipoDeEnvaseId == filtroEnvase.TipoDeEnvaseId, cantidadPorPagina, paginaActual);
+            }
+            else if(filtro==Filtro.TipoPlanta)
+            {
+                lista = servicio.Find(p => p.TipoDePlantaId == filtroPlanta.TipoDePlantaId, cantidadPorPagina, paginaActual);
+                
             }
             MostrarDatosEnGrilla();
 
@@ -138,38 +137,154 @@ namespace Practico01WF.UI
 
         private void tsbBuscar_Click(object sender, EventArgs e)
         {
-            FrmBuscarPlanta frm = new FrmBuscarPlanta() {Text = "Seleccionar Filtros"};
+            FrmBuscarPlanta frm = new FrmBuscarPlanta() { Text = "Seleccione Filtro" };
             DialogResult dr = frm.ShowDialog(this);
-
-            if (dr==DialogResult.OK)
+            if (dr == DialogResult.OK)
             {
-                //TODO:Ver que viene del form
-                try
+                tsbBuscar.Image = Resources.BuscarActivado;
+                if (frm.GetTipoEnvase() != null)
                 {
-                    filtro = Filtro.On;
-                    tsbBuscar.Image = Resources.BuscarActivado;
-                    //cantidadRegistros = servicio.GetCantidad(p => p.TipoDePlantaId == 1);
-                    cantidadRegistros = servicio.GetCantidad(p => p.TipoDeEnvaseId == 1);
 
-                    paginaActual = 1;
-
+                    filtroEnvase = frm.GetTipoEnvase();
+                    cantidadRegistros = servicio.GetCantidad(p => p.TipoDeEnvaseId == filtroEnvase.TipoDeEnvaseId);
                     cantidadPaginas = CalcularCantidadDePaginas(cantidadRegistros, cantidadPorPagina);
-
-                    CrearBotonesPaginado(cantidadPaginas);
+                    CrearBotonesPaginas(cantidadPaginas);
+                    paginaActual = 1;
+                    filtro = Filtro.TipoEnvase;
                     MostrarPaginado(cantidadPorPagina, paginaActual);
                 }
-                catch (Exception exception)
+                else
                 {
-                    MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    filtroPlanta = frm.GetTipoPlanta();
+                    cantidadRegistros = servicio.GetCantidad(p => p.TipoDePlantaId == filtroPlanta.TipoDePlantaId);
+                    cantidadPaginas = CalcularCantidadDePaginas(cantidadRegistros, cantidadPorPagina);
+                    CrearBotonesPaginas(cantidadPaginas);
+                    paginaActual = 1;
+                    filtro = Filtro.TipoPlanta;
+                    MostrarPaginado(cantidadPorPagina, paginaActual);
                 }
+            }
 
-            }        }
+        }
 
         private void tsbActualizar_Click(object sender, EventArgs e)
         {
             tsbBuscar.Image = Resources.Buscar;
             filtro = Filtro.Off;
             InicializarGrilla();
+        }
+
+        private void tsbNuevo_Click(object sender, EventArgs e)
+        {
+            FrmPlantaEdit frm = new FrmPlantaEdit() { Text = "Nueva Planta" };
+            DialogResult dr = frm.ShowDialog(this);
+            InicializarGrilla();
+
+            //if (dr == DialogResult.OK)
+            //{
+            //    try
+            //    {
+            //        Planta planta = frm.GetPlanta();
+            //        if (servicio.Existe(planta))
+            //        {
+            //            MessageBox.Show("Planta existente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //            return;
+            //        }
+            //        servicio.Guardar(planta);
+            //        DataGridViewRow r = HelperGrid.CrearFila(DatosDataGridView);
+            //        HelperGrid.SetearFila(r, planta);
+            //        HelperGrid.AgregarFila(DatosDataGridView, r);
+            //        cantidadRegistros = servicio.GetCantidad();
+            //        MessageBox.Show("Registro guardado", "Mensaje",
+            //            MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    }
+            //}
+
+        }
+
+        private void tsbBorrar_Click(object sender, EventArgs e)
+        {
+            if (DatosDataGridView.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            DataGridViewRow r = DatosDataGridView.SelectedRows[0];
+            Planta planta = (Planta)r.Tag;
+            DialogResult dr = MessageBox.Show($"¿Desea dar de baja el registro de {planta.Descripcion}?",
+                "Confirmar Baja",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
+            if (dr == DialogResult.No)
+            {
+                return;
+            }
+
+            try
+            {
+                servicio.Borrar(planta.PlantaId);
+                HelperGrid.BorrarFila(DatosDataGridView, r);
+
+                cantidadRegistros = servicio.GetCantidad();
+                CantidadDeRegistrosLabel.Text = cantidadRegistros.ToString();
+                cantidadPaginas = CalcularCantidadDePaginas(cantidadRegistros,cantidadPorPagina);
+                CrearBotonesPaginas(cantidadPaginas);
+
+                MessageBox.Show("Registro borrado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(@"Registro relacionado... Baja denegada", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void tsbEditar_Click(object sender, EventArgs e)
+        {
+            if (DatosDataGridView.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            DataGridViewRow r = DatosDataGridView.SelectedRows[0];
+            Planta planta = (Planta)r.Tag;
+            Planta plantaCopia = (Planta)planta.Clone();
+            FrmPlantaEdit frm = new FrmPlantaEdit() { Text = "Editar Planta" };
+            frm.SetPlanta(planta);
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            MostrarPaginado(cantidadPorPagina, paginaActual);
+            //try
+            //{
+            //    planta = frm.GetPlanta();
+            //    if (servicio.Existe(planta))
+            //    {
+            //        HelperGrid.SetearFila(r, plantaCopia);
+            //        MessageBox.Show("Tipo de Planta existente", "Error",
+            //            MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        return;
+            //    }
+            //    servicio.Guardar(planta);
+            //    HelperGrid.SetearFila(r, planta);
+            //    MessageBox.Show("Registro Editado", "Mensaje",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+            //catch (Exception exception)
+            //{
+            //    HelperGrid.SetearFila(r, plantaCopia);
+            //    MessageBox.Show(exception.Message, "Error",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+
         }
     }
 }

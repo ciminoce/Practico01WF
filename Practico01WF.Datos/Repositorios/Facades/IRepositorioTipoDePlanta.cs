@@ -15,6 +15,7 @@ namespace Practico01WF.Datos.Repositorios.Facades
         bool Existe(TipoDePlanta tipoDePlanta);
         bool EstaRelacionado(TipoDePlanta tipoDePlanta);
         int GetCantidad();
+        List<IGrouping<int, Planta>> GetGrupos();
         void Borrar(int tipoDePlantaId);
     }
 }

@@ -29,6 +29,7 @@ namespace Practico01WF.UI
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.CancelButton = new System.Windows.Forms.Button();
             this.OkButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -37,6 +38,8 @@ namespace Practico01WF.UI
             this.label3 = new System.Windows.Forms.Label();
             this.TipoDePlantaComboBox = new System.Windows.Forms.ComboBox();
             this.TipoDeEnvaseComboBox = new System.Windows.Forms.ComboBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // CancelButton
@@ -49,6 +52,7 @@ namespace Practico01WF.UI
             this.CancelButton.Text = "Cancelar";
             this.CancelButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // OkButton
             // 
@@ -60,6 +64,7 @@ namespace Practico01WF.UI
             this.OkButton.Text = "OK";
             this.OkButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.OkButton.UseVisualStyleBackColor = true;
+            this.OkButton.Click += new System.EventHandler(this.OkButton_Click);
             // 
             // label1
             // 
@@ -114,6 +119,10 @@ namespace Practico01WF.UI
             this.TipoDeEnvaseComboBox.Size = new System.Drawing.Size(247, 21);
             this.TipoDeEnvaseComboBox.TabIndex = 26;
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // FrmPlantaEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -133,6 +142,7 @@ namespace Practico01WF.UI
             this.Name = "FrmPlantaEdit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmPlantaEdit";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -148,5 +158,6 @@ namespace Practico01WF.UI
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox TipoDePlantaComboBox;
         private System.Windows.Forms.ComboBox TipoDeEnvaseComboBox;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

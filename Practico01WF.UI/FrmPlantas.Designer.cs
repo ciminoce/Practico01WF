@@ -29,14 +29,15 @@ namespace Practico01WF.UI
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.DatosDataGridView = new System.Windows.Forms.DataGridView();
             this.colPlanta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTipoDePlanta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTipoEnvase = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BotonesPanel = new System.Windows.Forms.Panel();
             this.CantidadDePaginasLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.PaginaActualLabel = new System.Windows.Forms.Label();
@@ -44,16 +45,15 @@ namespace Practico01WF.UI
             this.CantidadDeRegistrosLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.BotonesPanel = new System.Windows.Forms.Panel();
             this.tsbNuevo = new System.Windows.Forms.ToolStripButton();
             this.tsbBorrar = new System.Windows.Forms.ToolStripButton();
             this.tsbEditar = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbBuscar = new System.Windows.Forms.ToolStripButton();
             this.tsbActualizar = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbImprimir = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbCerrar = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -92,9 +92,9 @@ namespace Practico01WF.UI
             this.DatosDataGridView.AllowUserToAddRows = false;
             this.DatosDataGridView.AllowUserToResizeColumns = false;
             this.DatosDataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DatosDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DatosDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
             this.DatosDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DatosDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colPlanta,
@@ -105,8 +105,8 @@ namespace Practico01WF.UI
             this.DatosDataGridView.MultiSelect = false;
             this.DatosDataGridView.Name = "DatosDataGridView";
             this.DatosDataGridView.ReadOnly = true;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DatosDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DatosDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.DatosDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DatosDataGridView.Size = new System.Drawing.Size(855, 501);
             this.DatosDataGridView.TabIndex = 0;
@@ -121,8 +121,8 @@ namespace Practico01WF.UI
             // colTipoDePlanta
             // 
             this.colTipoDePlanta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.colTipoDePlanta.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colTipoDePlanta.DefaultCellStyle = dataGridViewCellStyle8;
             this.colTipoDePlanta.HeaderText = "Tipo de Planta";
             this.colTipoDePlanta.Name = "colTipoDePlanta";
             this.colTipoDePlanta.ReadOnly = true;
@@ -135,6 +135,13 @@ namespace Practico01WF.UI
             this.colTipoEnvase.Name = "colTipoEnvase";
             this.colTipoEnvase.ReadOnly = true;
             this.colTipoEnvase.Width = 98;
+            // 
+            // BotonesPanel
+            // 
+            this.BotonesPanel.Location = new System.Drawing.Point(234, 20);
+            this.BotonesPanel.Name = "BotonesPanel";
+            this.BotonesPanel.Size = new System.Drawing.Size(603, 54);
+            this.BotonesPanel.TabIndex = 2;
             // 
             // CantidadDePaginasLabel
             // 
@@ -212,28 +219,6 @@ namespace Practico01WF.UI
             this.toolStrip1.TabIndex = 12;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 62);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 62);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 62);
-            // 
-            // BotonesPanel
-            // 
-            this.BotonesPanel.Location = new System.Drawing.Point(234, 20);
-            this.BotonesPanel.Name = "BotonesPanel";
-            this.BotonesPanel.Size = new System.Drawing.Size(603, 54);
-            this.BotonesPanel.TabIndex = 2;
-            // 
             // tsbNuevo
             // 
             this.tsbNuevo.Image = global::Practico01WF.UI.Properties.Resources.Nuevo;
@@ -243,6 +228,7 @@ namespace Practico01WF.UI
             this.tsbNuevo.Size = new System.Drawing.Size(46, 59);
             this.tsbNuevo.Text = "Nuevo";
             this.tsbNuevo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbNuevo.Click += new System.EventHandler(this.tsbNuevo_Click);
             // 
             // tsbBorrar
             // 
@@ -253,6 +239,7 @@ namespace Practico01WF.UI
             this.tsbBorrar.Size = new System.Drawing.Size(44, 59);
             this.tsbBorrar.Text = "Borrar";
             this.tsbBorrar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbBorrar.Click += new System.EventHandler(this.tsbBorrar_Click);
             // 
             // tsbEditar
             // 
@@ -263,6 +250,12 @@ namespace Practico01WF.UI
             this.tsbEditar.Size = new System.Drawing.Size(44, 59);
             this.tsbEditar.Text = "Editar";
             this.tsbEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbEditar.Click += new System.EventHandler(this.tsbEditar_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 62);
             // 
             // tsbBuscar
             // 
@@ -286,6 +279,11 @@ namespace Practico01WF.UI
             this.tsbActualizar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbActualizar.Click += new System.EventHandler(this.tsbActualizar_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 62);
+            // 
             // tsbImprimir
             // 
             this.tsbImprimir.Image = global::Practico01WF.UI.Properties.Resources.Print;
@@ -295,6 +293,11 @@ namespace Practico01WF.UI
             this.tsbImprimir.Size = new System.Drawing.Size(57, 59);
             this.tsbImprimir.Text = "Imprimir";
             this.tsbImprimir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 62);
             // 
             // tsbCerrar
             // 

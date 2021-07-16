@@ -53,6 +53,7 @@ namespace Practico01WF.UI
             this.TiposDeEnvasesButton.TabIndex = 0;
             this.TiposDeEnvasesButton.Text = "Tipos de Envases";
             this.TiposDeEnvasesButton.UseVisualStyleBackColor = true;
+            this.TiposDeEnvasesButton.Click += new System.EventHandler(this.TiposDeEnvasesButton_Click);
             // 
             // PlantasButton
             // 
