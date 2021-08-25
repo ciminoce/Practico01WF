@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Practico01WF.Entidades;
+using Practico01WF.Reportes;
+using Practico01WF.Reportes.Reportes;
 using Practico01WF.Servicios.Servicios;
 using Practico01WF.Servicios.Servicios.Facades;
 using Practico01WF.UI.Helpers;
@@ -169,5 +171,12 @@ namespace Practico01WF.UI
         {
         }
 
+        private void tsbImprimir_Click(object sender, EventArgs e)
+        {
+            ListaDeTiposDeEnvases rpt = ManejadorDeReportes.GetListadoDeTiposDeEnvases(lista);
+            FrmVisorReportes frm = new FrmVisorReportes();
+            frm.SetReporte(rpt);
+            frm.ShowDialog(this);
+        }
     }
 }

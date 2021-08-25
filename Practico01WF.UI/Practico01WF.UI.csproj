@@ -36,6 +36,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AxShockwaveFlashObjects, Version=1.0.0.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -48,6 +53,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -113,6 +120,12 @@
     <Compile Include="FrmTiposDePlantas.Designer.cs">
       <DependentUpon>FrmTiposDePlantas.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmVisorReportes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmVisorReportes.Designer.cs">
+      <DependentUpon>FrmVisorReportes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\HelperCombo.cs" />
     <Compile Include="Helpers\HelperGrid.cs" />
     <Compile Include="Ninject\Bindings.cs" />
@@ -145,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTiposDePlantas.resx">
       <DependentUpon>FrmTiposDePlantas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmVisorReportes.resx">
+      <DependentUpon>FrmVisorReportes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -223,6 +239,10 @@
     <ProjectReference Include="..\Practico01WF.Entidades\Practico01WF.Entidades.csproj">
       <Project>{a05c27fb-b739-4a37-9b0d-4900deacc49d}</Project>
       <Name>Practico01WF.Entidades</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Practico01WF.Reportes\Practico01WF.Reportes.csproj">
+      <Project>{a31c0594-ff6e-49e0-ad61-b7a0972e5a59}</Project>
+      <Name>Practico01WF.Reportes</Name>
     </ProjectReference>
     <ProjectReference Include="..\Practico01WF.Servicios\Practico01WF.Servicios.csproj">
       <Project>{ffc5b01e-df07-4ff8-8b79-5eb77e9edaa4}</Project>

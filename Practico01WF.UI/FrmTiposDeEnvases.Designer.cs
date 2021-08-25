@@ -212,6 +212,7 @@ namespace Practico01WF.UI
             this.tsbImprimir.Size = new System.Drawing.Size(57, 59);
             this.tsbImprimir.Text = "Imprimir";
             this.tsbImprimir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbImprimir.Click += new System.EventHandler(this.tsbImprimir_Click);
             // 
             // toolStripSeparator3
             // 

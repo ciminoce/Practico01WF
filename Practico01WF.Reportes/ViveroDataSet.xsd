@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ViveroDataSet" targetNamespace="http://tempuri.org/ViveroDataSet.xsd" xmlns:mstns="http://tempuri.org/ViveroDataSet.xsd" xmlns="http://tempuri.org/ViveroDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ViveroDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ViveroDataSet" msprop:Generator_UserDSName="ViveroDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="EnvasesDataTable" msprop:Generator_TableClassName="EnvasesDataTableDataTable" msprop:Generator_TableVarName="tableEnvasesDataTable" msprop:Generator_TablePropName="EnvasesDataTable" msprop:Generator_RowDeletingName="EnvasesDataTableRowDeleting" msprop:Generator_RowChangingName="EnvasesDataTableRowChanging" msprop:Generator_RowEvHandlerName="EnvasesDataTableRowChangeEventHandler" msprop:Generator_RowDeletedName="EnvasesDataTableRowDeleted" msprop:Generator_UserTableName="EnvasesDataTable" msprop:Generator_RowChangedName="EnvasesDataTableRowChanged" msprop:Generator_RowEvArgName="EnvasesDataTableRowChangeEvent" msprop:Generator_RowClassName="EnvasesDataTableRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Descripcion" msprop:Generator_ColumnVarNameInTable="columnDescripcion" msprop:Generator_ColumnPropNameInRow="Descripcion" msprop:Generator_ColumnPropNameInTable="DescripcionColumn" msprop:Generator_UserColumnName="Descripcion" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
