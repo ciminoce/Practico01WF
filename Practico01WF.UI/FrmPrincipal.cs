@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Practico01WF.Servicios.Servicios.Facades;
+using Practico01WF.UI.Ninject;
 
 namespace Practico01WF.UI
 {
@@ -24,19 +26,19 @@ namespace Practico01WF.UI
 
         private void TiposDePlantasButton_Click(object sender, EventArgs e)
         {
-            FrmTiposDePlantas frm = new FrmTiposDePlantas();
+            FrmTiposDePlantas frm = new FrmTiposDePlantas(DI.Create<IServicioTipoDePlanta>());
             frm.ShowDialog(this);
         }
 
         private void PlantasButton_Click(object sender, EventArgs e)
         {
-            FrmPlantas frm = new FrmPlantas();
+            FrmPlantas frm = new FrmPlantas(DI.Create<IServicioPlanta>());
             frm.ShowDialog(this);
         }
 
         private void TiposDeEnvasesButton_Click(object sender, EventArgs e)
         {
-            FrmTiposDeEnvases frm = new FrmTiposDeEnvases();
+            FrmTiposDeEnvases frm = new FrmTiposDeEnvases(DI.Create<IServicioTipoDeEnvase>());
             frm.ShowDialog(this);
         }
     }

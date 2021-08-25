@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Practico01WF.Datos;
 using Practico01WF.Datos.Repositorios;
 using Practico01WF.Datos.Repositorios.Facades;
 using Practico01WF.Entidades;
@@ -12,17 +13,24 @@ namespace Practico01WF.Servicios.Servicios
 {
     public class ServicioTipoDeEnvase:IServicioTipoDeEnvase
     {
-        private IRepositorioTipoDeEnvase repositorio;
+        private readonly IRepositorioTipoDeEnvase _repositorio;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ServicioTipoDeEnvase()
+        public ServicioTipoDeEnvase(IRepositorioTipoDeEnvase repositorio, IUnitOfWork unitOfWork)
         {
-            repositorio = new RepositorioTipoDeEnvase();
+            _repositorio = repositorio;
+            _unitOfWork = unitOfWork;
         }
+
+        //public ServicioTipoDeEnvase()
+        //{
+        //    _repositorio = new RepositorioTipoDeEnvase();
+        //}
         public List<TipoDeEnvase> GetLista()
         {
             try
             {
-                return repositorio.GetLista();
+                return _repositorio.GetLista();
             }
             catch (Exception e)
             {
@@ -36,7 +44,7 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                return repositorio.GetTipoDeEnvasePorId(id);
+                return _repositorio.GetTipoDeEnvasePorId(id);
             }
             catch (Exception e)
             {
@@ -48,7 +56,8 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                repositorio.Guardar(tipoDeEnvase);
+                _repositorio.Guardar(tipoDeEnvase);
+                _unitOfWork.Save();
             }
             catch (Exception e)
             {
@@ -60,7 +69,7 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                return repositorio.Existe(tipoDeEnvase);
+                return _repositorio.Existe(tipoDeEnvase);
             }
             catch (Exception e)
             {
@@ -77,7 +86,7 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                return repositorio.GetCantidad();
+                return _repositorio.GetCantidad();
             }
             catch (Exception e)
             {
@@ -89,7 +98,7 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                return repositorio.GetGrupos();
+                return _repositorio.GetGrupos();
             }
             catch (Exception e)
             {
@@ -101,7 +110,8 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                repositorio.Borrar(tipoDeEnvaseId);
+                _repositorio.Borrar(tipoDeEnvaseId);
+                _unitOfWork.Save();
             }
             catch (Exception e)
             {

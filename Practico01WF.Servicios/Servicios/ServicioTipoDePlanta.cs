@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Practico01WF.Datos;
 using Practico01WF.Datos.Repositorios;
 using Practico01WF.Datos.Repositorios.Facades;
 using Practico01WF.Entidades;
@@ -12,17 +13,24 @@ namespace Practico01WF.Servicios.Servicios
 {
     public class ServicioTipoDePlanta:IServicioTipoDePlanta
     {
-        private IRepositorioTipoDePlanta repositorio;
+        private readonly IRepositorioTipoDePlanta _repositorio;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ServicioTipoDePlanta()
+        public ServicioTipoDePlanta(IRepositorioTipoDePlanta repositorio, IUnitOfWork unitOfWork)
         {
-            repositorio = new RepositorioTipoDePlanta();
+            _repositorio = repositorio;
+            _unitOfWork = unitOfWork;
         }
+
+        //public ServicioTipoDePlanta()
+        //{
+        //    _repositorio = new RepositorioTipoDePlanta();
+        //}
         public List<TipoDePlanta> GetLista()
         {
             try
             {
-                return repositorio.GetLista();
+                return _repositorio.GetLista();
             }
             catch (Exception e)
             {
@@ -35,7 +43,7 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                return repositorio.GetTipoDePlantaPorId(id);
+                return _repositorio.GetTipoDePlantaPorId(id);
             }
             catch (Exception e)
             {
@@ -47,7 +55,8 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                repositorio.Guardar(tipoDePlanta);
+                _repositorio.Guardar(tipoDePlanta);
+                _unitOfWork.Save();
             }
             catch (Exception e)
             {
@@ -59,7 +68,7 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                return repositorio.Existe(tipoDePlanta);
+                return _repositorio.Existe(tipoDePlanta);
             }
             catch (Exception e)
             {
@@ -76,7 +85,7 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                return repositorio.GetCantidad();
+                return _repositorio.GetCantidad();
             }
             catch (Exception e)
             {
@@ -88,7 +97,7 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                return repositorio.GetGrupos();
+                return _repositorio.GetGrupos();
             }
             catch (Exception e)
             {
@@ -100,7 +109,8 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                repositorio.Borrar(tipoDePlantaId);
+                _repositorio.Borrar(tipoDePlantaId);
+                _unitOfWork.Save();
             }
             catch (Exception e)
             {

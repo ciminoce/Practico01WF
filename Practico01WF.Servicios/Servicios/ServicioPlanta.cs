@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Practico01WF.Datos;
 using Practico01WF.Datos.Repositorios;
 using Practico01WF.Datos.Repositorios.Facades;
 using Practico01WF.Entidades;
@@ -12,17 +13,23 @@ namespace Practico01WF.Servicios.Servicios
 {
     public class ServicioPlanta:IServicioPlanta
     {
-        private IRepositorioPlanta repositorio;
+        private readonly IRepositorioPlanta _repositorio;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ServicioPlanta()
+        public ServicioPlanta(IRepositorioPlanta repositorio, IUnitOfWork unitOfWork)
         {
-            repositorio = new RepositorioPlanta();
+            _repositorio = repositorio;
+            _unitOfWork = unitOfWork;
         }
+        //public ServicioPlanta()
+        //{
+        //    _repositorio = new RepositorioPlanta();
+        //}
         public List<Planta> GetLista(int registros, int pagina)
         {
             try
             {
-                return repositorio.GetLista(registros, pagina);
+                return _repositorio.GetLista(registros, pagina);
             }
             catch (Exception e)
             {
@@ -34,7 +41,7 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                return repositorio.Find(predicate,registros,pagina);
+                return _repositorio.Find(predicate,registros,pagina);
             }
             catch (Exception e)
             {
@@ -51,7 +58,8 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                repositorio.Guardar(planta);
+                _repositorio.Guardar(planta);
+                _unitOfWork.Save();
             }
             catch (Exception e)
             {
@@ -64,7 +72,7 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                return repositorio.Existe(planta);
+                return _repositorio.Existe(planta);
             }
             catch (Exception e)
             {
@@ -76,7 +84,7 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                return repositorio.GetCantidad();
+                return _repositorio.GetCantidad();
             }
             catch (Exception e)
             {
@@ -88,7 +96,7 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                return repositorio.GetCantidad(predicate);
+                return _repositorio.GetCantidad(predicate);
             }
             catch (Exception e)
             {
@@ -100,7 +108,8 @@ namespace Practico01WF.Servicios.Servicios
         {
             try
             {
-                repositorio.Borrar(plantaId);
+                _repositorio.Borrar(plantaId);
+                _unitOfWork.Save();
             }
             catch (Exception e)
             {

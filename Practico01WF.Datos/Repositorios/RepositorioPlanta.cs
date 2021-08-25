@@ -11,17 +11,21 @@ namespace Practico01WF.Datos.Repositorios
 {
     public class RepositorioPlanta:IRepositorioPlanta
     {
-        private ViveroDbContext context;
+        private readonly ViveroDbContext _context;
 
-        public RepositorioPlanta()
+        public RepositorioPlanta(ViveroDbContext context)
         {
-            context = new ViveroDbContext();
+            _context = context;
         }
+        //public RepositorioPlanta()
+        //{
+        //    _context = new ViveroDbContext();
+        //}
         public List<Planta> GetLista(int cantidad, int pagina)
         {
             try
             {
-                return context.Plantas
+                return _context.Plantas
                     .Include(p => p.TipoDePlanta)
                     .Include(p => p.TipoDeEnvase)
                     .OrderBy(p=>p.PlantaId)
@@ -40,7 +44,7 @@ namespace Practico01WF.Datos.Repositorios
         {
             try
             {
-                return context.Plantas.Where(predicate)
+                return _context.Plantas.Where(predicate)
                     .OrderBy(p=>p.PlantaId)
                     .Skip(registros*(pagina-1))
                     .Take(registros)
@@ -60,14 +64,17 @@ namespace Practico01WF.Datos.Repositorios
         public void Guardar(Planta planta)
         {
             try
-            {
+            {                    
+                _context.TiposDePlantas.Attach(planta.TipoDePlanta);
+                _context.TiposDeEnvases.Attach(planta.TipoDeEnvase);
+
                 if (planta.PlantaId==0)
                 {
-                    context.Plantas.Add(planta);
+                    _context.Plantas.Add(planta);
                 }
                 else
                 {
-                    var plantaInDb = context.Plantas.SingleOrDefault(p => p.PlantaId == planta.PlantaId);
+                    var plantaInDb = _context.Plantas.SingleOrDefault(p => p.PlantaId == planta.PlantaId);
                     if (plantaInDb==null)
                     {
                         throw new Exception("Planta inexistente");
@@ -77,11 +84,11 @@ namespace Practico01WF.Datos.Repositorios
                     plantaInDb.TipoDeEnvaseId = planta.TipoDeEnvaseId;
                     plantaInDb.TipoDePlantaId = plantaInDb.TipoDePlantaId;
 
-                    context.Entry(plantaInDb).State = EntityState.Modified;
+                    _context.Entry(plantaInDb).State = EntityState.Modified;
 
                 }
 
-                context.SaveChanges();
+                //_context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -95,11 +102,11 @@ namespace Practico01WF.Datos.Repositorios
             {
                 if (planta.PlantaId == 0)
                 {
-                    return context.Plantas.Any(p=>p.Descripcion==planta.Descripcion);
+                    return _context.Plantas.Any(p=>p.Descripcion==planta.Descripcion);
                 }
                 else
                 {
-                    return context.Plantas
+                    return _context.Plantas
                         .Any(p => p.Descripcion == planta.Descripcion && p.PlantaId!=planta.PlantaId);
 
                 }
@@ -115,7 +122,7 @@ namespace Practico01WF.Datos.Repositorios
         {
             try
             {
-                return context.Plantas.Count();
+                return _context.Plantas.Count();
             }
             catch (Exception e)
             {
@@ -127,7 +134,7 @@ namespace Practico01WF.Datos.Repositorios
         {
             try
             {
-                return context.Plantas.Count(predicate);
+                return _context.Plantas.Count(predicate);
             }
             catch (Exception e)
             {
@@ -139,15 +146,15 @@ namespace Practico01WF.Datos.Repositorios
         {
             try
             {
-                var plantaInDb = context.Plantas.SingleOrDefault(p => p.PlantaId == plantaId);
+                var plantaInDb = _context.Plantas.SingleOrDefault(p => p.PlantaId == plantaId);
                 if (plantaInDb==null)
                 {
                     throw new Exception("Planta inexistente");
 
                 }
 
-                context.Entry(plantaInDb).State = EntityState.Deleted;
-                context.SaveChanges();
+                _context.Entry(plantaInDb).State = EntityState.Deleted;
+                //_context.SaveChanges();
             }
             catch (Exception e)
             {

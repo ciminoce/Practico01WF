@@ -17,19 +17,20 @@ namespace Practico01WF.UI
 {
     public partial class FrmPlantaEdit : Form
     {
-        public FrmPlantaEdit()
+        public FrmPlantaEdit(IServicioPlanta servicio)
         {
             InitializeComponent();
+            _servicio = servicio;
         }
 
-        private IServicioPlanta servicio;
+        private readonly IServicioPlanta _servicio;
         private OperacionBd operacion=OperacionBd.Alta;
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             HelperCombo.CargarDatosComboTipoEnvase(ref TipoDeEnvaseComboBox);
             HelperCombo.CargarDatosComboTipoPlanta(ref TipoDePlantaComboBox);
-            servicio = new ServicioPlanta();
+            //servicio = new ServicioPlanta();
             if (planta!=null)
             {
                 PlantaTextBox.Text = planta.Descripcion;
@@ -50,17 +51,19 @@ namespace Practico01WF.UI
                 }
 
                 planta.Descripcion = PlantaTextBox.Text;
+                planta.TipoDeEnvase = (TipoDeEnvase) TipoDeEnvaseComboBox.SelectedItem;
+                planta.TipoDePlanta = (TipoDePlanta) TipoDePlantaComboBox.SelectedItem;
                 planta.TipoDeEnvaseId = ((TipoDeEnvase) TipoDeEnvaseComboBox.SelectedItem).TipoDeEnvaseId;
                 planta.TipoDePlantaId = ((TipoDePlanta)TipoDePlantaComboBox.SelectedItem).TipoDePlantaId;
 
                 try
                 {
-                    if (servicio.Existe(planta))
+                    if (_servicio.Existe(planta))
                     {
                         errorProvider1.SetError(PlantaTextBox,"Planta inexistente");
                         return;
                     }
-                    servicio.Guardar(planta);
+                    _servicio.Guardar(planta);
                     MessageBox.Show("Registro guardado", "Mensaje",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
 

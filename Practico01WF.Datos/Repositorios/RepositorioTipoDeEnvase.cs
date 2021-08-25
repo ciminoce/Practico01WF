@@ -11,17 +11,22 @@ namespace Practico01WF.Datos.Repositorios
 {
     public class RepositorioTipoDeEnvase:IRepositorioTipoDeEnvase
     {
-        private ViveroDbContext context;
+        private readonly ViveroDbContext _context;
 
-        public RepositorioTipoDeEnvase()
+        public RepositorioTipoDeEnvase(ViveroDbContext context)
         {
-            context = new ViveroDbContext();
+            _context = context;
         }
+
+        //public RepositorioTipoDeEnvase()
+        //{
+        //    _context = new ViveroDbContext();
+        //}
         public List<TipoDeEnvase> GetLista()
         {
             try
             {
-                return context.TiposDeEnvases
+                return _context.TiposDeEnvases
                     .OrderBy(tp => tp.Descripcion)
                     .AsNoTracking().ToList();
             }
@@ -36,7 +41,7 @@ namespace Practico01WF.Datos.Repositorios
         {
             try
             {
-                return context.TiposDeEnvases.SingleOrDefault(tp => tp.TipoDeEnvaseId == id);
+                return _context.TiposDeEnvases.SingleOrDefault(tp => tp.TipoDeEnvaseId == id);
             }
             catch (Exception e)
             {
@@ -52,23 +57,23 @@ namespace Practico01WF.Datos.Repositorios
                 if (tipoDeEnvase.TipoDeEnvaseId == 0)
                 {
                     //Cuando el id=0 entonces la entidad es nueva ==>alta
-                    context.TiposDeEnvases.Add(tipoDeEnvase);
+                    _context.TiposDeEnvases.Add(tipoDeEnvase);
 
                 }
                 else
                 {
                     var tipoDeEnvaseInDb =
-                        context.TiposDeEnvases.SingleOrDefault(tp => tp.TipoDeEnvaseId == tipoDeEnvase.TipoDeEnvaseId);
+                        _context.TiposDeEnvases.SingleOrDefault(tp => tp.TipoDeEnvaseId == tipoDeEnvase.TipoDeEnvaseId);
                     if (tipoDeEnvaseInDb == null)
                     {
                         throw new Exception("Tipo de Envase inexistente");
                     }
 
                     tipoDeEnvaseInDb.Descripcion = tipoDeEnvase.Descripcion;
-                    context.Entry(tipoDeEnvaseInDb).State = EntityState.Modified;
+                    _context.Entry(tipoDeEnvaseInDb).State = EntityState.Modified;
 
                 }
-                context.SaveChanges();
+                //_context.SaveChanges();
 
             }
             catch (Exception e)
@@ -84,10 +89,10 @@ namespace Practico01WF.Datos.Repositorios
             {
                 if (tipoDeEnvase.TipoDeEnvaseId == 0)
                 {
-                    return context.TiposDeEnvases.Any(tp => tp.Descripcion == tipoDeEnvase.Descripcion);
+                    return _context.TiposDeEnvases.Any(tp => tp.Descripcion == tipoDeEnvase.Descripcion);
                 }
 
-                return context.TiposDeEnvases.Any(tp => tp.Descripcion == tipoDeEnvase.Descripcion
+                return _context.TiposDeEnvases.Any(tp => tp.Descripcion == tipoDeEnvase.Descripcion
                                                         && tp.TipoDeEnvaseId != tipoDeEnvase.TipoDeEnvaseId);
             }
             catch (Exception e)
@@ -105,7 +110,7 @@ namespace Practico01WF.Datos.Repositorios
         {
             try
             {
-                return context.TiposDeEnvases.Count();
+                return _context.TiposDeEnvases.Count();
             }
             catch (Exception e)
             {
@@ -119,7 +124,7 @@ namespace Practico01WF.Datos.Repositorios
         {
             try
             {
-                return context.Plantas.GroupBy(p => p.TipoDeEnvaseId).ToList();
+                return _context.Plantas.GroupBy(p => p.TipoDeEnvaseId).ToList();
             }
             catch (Exception e)
             {
@@ -132,15 +137,15 @@ namespace Practico01WF.Datos.Repositorios
             TipoDeEnvase tipoInDb = null;
             try
             {
-                tipoInDb = context.TiposDeEnvases
+                tipoInDb = _context.TiposDeEnvases
                     .SingleOrDefault(tp => tp.TipoDeEnvaseId == tipoDeEnvaseId);
                 if (tipoInDb == null) return;
-                context.Entry(tipoInDb).State = EntityState.Deleted;
-                context.SaveChanges();
+                _context.Entry(tipoInDb).State = EntityState.Deleted;
+                //_context.SaveChanges();
             }
             catch (Exception e)
             {
-                context.Entry(tipoInDb).State = EntityState.Unchanged;
+                _context.Entry(tipoInDb).State = EntityState.Unchanged;
                 throw new Exception(e.Message);
             }
         }

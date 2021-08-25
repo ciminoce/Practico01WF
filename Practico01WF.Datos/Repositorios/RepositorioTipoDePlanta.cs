@@ -11,17 +11,22 @@ namespace Practico01WF.Datos.Repositorios
 {
     public class RepositorioTipoDePlanta:IRepositorioTipoDePlanta
     {
-        private ViveroDbContext context;
+        private readonly ViveroDbContext _context;
 
-        public RepositorioTipoDePlanta()
+        public RepositorioTipoDePlanta(ViveroDbContext context)
         {
-            context = new ViveroDbContext();
+            _context = context;
         }
+
+        //public RepositorioTipoDePlanta()
+        //{
+        //    _context = new ViveroDbContext();
+        //}
         public List<TipoDePlanta> GetLista()
         {
             try
             {
-                return context.TiposDePlantas
+                return _context.TiposDePlantas
                     .OrderBy(tp=>tp.Descripcion)
                     .AsNoTracking().ToList();
             }
@@ -36,7 +41,7 @@ namespace Practico01WF.Datos.Repositorios
         {
             try
             {
-                return context.TiposDePlantas.SingleOrDefault(tp => tp.TipoDePlantaId == id);
+                return _context.TiposDePlantas.SingleOrDefault(tp => tp.TipoDePlantaId == id);
             }
             catch (Exception e)
             {
@@ -52,23 +57,23 @@ namespace Practico01WF.Datos.Repositorios
                 if (tipoDePlanta.TipoDePlantaId==0)
                 {
                     //Cuando el id=0 entonces la entidad es nueva ==>alta
-                    context.TiposDePlantas.Add(tipoDePlanta);
+                    _context.TiposDePlantas.Add(tipoDePlanta);
                     
                 }
                 else
                 {
                     var tipoDePlantaInDb =
-                        context.TiposDePlantas.SingleOrDefault(tp => tp.TipoDePlantaId == tipoDePlanta.TipoDePlantaId);
+                        _context.TiposDePlantas.SingleOrDefault(tp => tp.TipoDePlantaId == tipoDePlanta.TipoDePlantaId);
                     if (tipoDePlantaInDb==null)
                     {
                         throw new Exception("Tipo de Planta inexistente");
                     }
 
                     tipoDePlantaInDb.Descripcion = tipoDePlanta.Descripcion;
-                    context.Entry(tipoDePlantaInDb).State = EntityState.Modified;
+                    _context.Entry(tipoDePlantaInDb).State = EntityState.Modified;
                     
                 }
-                context.SaveChanges();
+                //_context.SaveChanges();
                 
             }
             catch (Exception e)
@@ -84,10 +89,10 @@ namespace Practico01WF.Datos.Repositorios
             {
                 if (tipoDePlanta.TipoDePlantaId==0)
                 {
-                    return context.TiposDePlantas.Any(tp => tp.Descripcion == tipoDePlanta.Descripcion);
+                    return _context.TiposDePlantas.Any(tp => tp.Descripcion == tipoDePlanta.Descripcion);
                 }
 
-                return context.TiposDePlantas.Any(tp => tp.Descripcion == tipoDePlanta.Descripcion
+                return _context.TiposDePlantas.Any(tp => tp.Descripcion == tipoDePlanta.Descripcion
                                                         && tp.TipoDePlantaId != tipoDePlanta.TipoDePlantaId);
             }
             catch (Exception e)
@@ -105,7 +110,7 @@ namespace Practico01WF.Datos.Repositorios
         {
             try
             {
-                return context.TiposDePlantas.Count();
+                return _context.TiposDePlantas.Count();
             }
             catch (Exception e)
             {
@@ -118,7 +123,7 @@ namespace Practico01WF.Datos.Repositorios
         {
             try
             {
-                return context.Plantas.GroupBy(p=>p.TipoDePlantaId).ToList();
+                return _context.Plantas.GroupBy(p=>p.TipoDePlantaId).ToList();
             }
             catch (Exception e)
             {
@@ -131,15 +136,15 @@ namespace Practico01WF.Datos.Repositorios
             TipoDePlanta tipoInDb=null;
             try
             {
-                tipoInDb = context.TiposDePlantas
+                tipoInDb = _context.TiposDePlantas
                     .SingleOrDefault(tp => tp.TipoDePlantaId == tipoDePlantaId);
                 if (tipoInDb == null) return;
-                context.Entry(tipoInDb).State = EntityState.Deleted;
-                context.SaveChanges();
+                _context.Entry(tipoInDb).State = EntityState.Deleted;
+                //_context.SaveChanges();
             }
             catch (Exception e)
             {
-                context.Entry(tipoInDb).State = EntityState.Unchanged;
+                _context.Entry(tipoInDb).State = EntityState.Unchanged;
                 throw new Exception(e.Message);
             }
         }

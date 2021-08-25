@@ -12,22 +12,24 @@ using Practico01WF.Entidades.Enums;
 using Practico01WF.Servicios.Servicios;
 using Practico01WF.Servicios.Servicios.Facades;
 using Practico01WF.UI.Helpers;
+using Practico01WF.UI.Ninject;
 using Practico01WF.UI.Properties;
 
 namespace Practico01WF.UI
 {
     public partial class FrmPlantas : Form
     {
-        public FrmPlantas()
+        public FrmPlantas(IServicioPlanta servicio)
         {
             InitializeComponent();
+            _servicio = servicio;
         }
 
         private Filtro filtro = Filtro.Off;
         private TipoDeEnvase filtroEnvase;
         private TipoDePlanta filtroPlanta;
 
-        private IServicioPlanta servicio;
+        private readonly IServicioPlanta _servicio;
         private List<Planta> lista;
         private int cantidadRegistros;
         private int cantidadPaginas;
@@ -35,7 +37,7 @@ namespace Practico01WF.UI
         private int paginaActual;
         private void FrmPlantas_Load(object sender, EventArgs e)
         {
-            servicio = new ServicioPlanta();
+            //servicio = new ServicioPlanta();
             InicializarGrilla();
         }
 
@@ -43,7 +45,7 @@ namespace Practico01WF.UI
         {
             try
             {
-                cantidadRegistros = servicio.GetCantidad();
+                cantidadRegistros = _servicio.GetCantidad();
                 cantidadPaginas = CalcularCantidadDePaginas(cantidadRegistros, cantidadPorPagina);
                 CrearBotonesPaginas(cantidadPaginas);
                 paginaActual = 1;
@@ -120,15 +122,15 @@ namespace Practico01WF.UI
         {
             if (filtro==Filtro.Off)
             {
-                lista = servicio.GetLista(cantidadPorPagina, paginaActual);
+                lista = _servicio.GetLista(cantidadPorPagina, paginaActual);
             }
             else if(filtro==Filtro.TipoEnvase)
             {
-                lista = servicio.Find(p => p.TipoDeEnvaseId == filtroEnvase.TipoDeEnvaseId, cantidadPorPagina, paginaActual);
+                lista = _servicio.Find(p => p.TipoDeEnvaseId == filtroEnvase.TipoDeEnvaseId, cantidadPorPagina, paginaActual);
             }
             else if(filtro==Filtro.TipoPlanta)
             {
-                lista = servicio.Find(p => p.TipoDePlantaId == filtroPlanta.TipoDePlantaId, cantidadPorPagina, paginaActual);
+                lista = _servicio.Find(p => p.TipoDePlantaId == filtroPlanta.TipoDePlantaId, cantidadPorPagina, paginaActual);
                 
             }
             MostrarDatosEnGrilla();
@@ -146,7 +148,7 @@ namespace Practico01WF.UI
                 {
 
                     filtroEnvase = frm.GetTipoEnvase();
-                    cantidadRegistros = servicio.GetCantidad(p => p.TipoDeEnvaseId == filtroEnvase.TipoDeEnvaseId);
+                    cantidadRegistros = _servicio.GetCantidad(p => p.TipoDeEnvaseId == filtroEnvase.TipoDeEnvaseId);
                     cantidadPaginas = CalcularCantidadDePaginas(cantidadRegistros, cantidadPorPagina);
                     CrearBotonesPaginas(cantidadPaginas);
                     paginaActual = 1;
@@ -156,7 +158,7 @@ namespace Practico01WF.UI
                 else
                 {
                     filtroPlanta = frm.GetTipoPlanta();
-                    cantidadRegistros = servicio.GetCantidad(p => p.TipoDePlantaId == filtroPlanta.TipoDePlantaId);
+                    cantidadRegistros = _servicio.GetCantidad(p => p.TipoDePlantaId == filtroPlanta.TipoDePlantaId);
                     cantidadPaginas = CalcularCantidadDePaginas(cantidadRegistros, cantidadPorPagina);
                     CrearBotonesPaginas(cantidadPaginas);
                     paginaActual = 1;
@@ -176,7 +178,7 @@ namespace Practico01WF.UI
 
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
-            FrmPlantaEdit frm = new FrmPlantaEdit() { Text = "Nueva Planta" };
+            FrmPlantaEdit frm = new FrmPlantaEdit(DI.Create<IServicioPlanta>()) { Text = "Nueva Planta" };
             DialogResult dr = frm.ShowDialog(this);
             InicializarGrilla();
 
@@ -227,10 +229,10 @@ namespace Practico01WF.UI
 
             try
             {
-                servicio.Borrar(planta.PlantaId);
+                _servicio.Borrar(planta.PlantaId);
                 HelperGrid.BorrarFila(DatosDataGridView, r);
 
-                cantidadRegistros = servicio.GetCantidad();
+                cantidadRegistros = _servicio.GetCantidad();
                 CantidadDeRegistrosLabel.Text = cantidadRegistros.ToString();
                 cantidadPaginas = CalcularCantidadDePaginas(cantidadRegistros,cantidadPorPagina);
                 CrearBotonesPaginas(cantidadPaginas);
@@ -254,7 +256,7 @@ namespace Practico01WF.UI
             DataGridViewRow r = DatosDataGridView.SelectedRows[0];
             Planta planta = (Planta)r.Tag;
             Planta plantaCopia = (Planta)planta.Clone();
-            FrmPlantaEdit frm = new FrmPlantaEdit() { Text = "Editar Planta" };
+            FrmPlantaEdit frm = new FrmPlantaEdit(DI.Create<IServicioPlanta>()) { Text = "Editar Planta" };
             frm.SetPlanta(planta);
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel)

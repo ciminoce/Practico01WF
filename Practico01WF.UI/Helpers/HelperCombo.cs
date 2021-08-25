@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using Practico01WF.Entidades;
 using Practico01WF.Servicios.Servicios;
 using Practico01WF.Servicios.Servicios.Facades;
+using Practico01WF.UI.Ninject;
 
 namespace Practico01WF.UI.Helpers
 {
@@ -15,7 +16,8 @@ namespace Practico01WF.UI.Helpers
     {
         public static void CargarDatosComboTipoPlanta(ref ComboBox combo)
         {
-            IServicioTipoDePlanta servicio = new ServicioTipoDePlanta();
+            //IServicioTipoDePlanta servicio = new ServicioTipoDePlanta();
+            IServicioTipoDePlanta servicio = DI.Create<IServicioTipoDePlanta>();
             List<TipoDePlanta> lista = servicio.GetLista();
             TipoDePlanta defaultTipo = new TipoDePlanta()
             {
@@ -31,7 +33,8 @@ namespace Practico01WF.UI.Helpers
         }
         public static void CargarDatosComboTipoEnvase(ref ComboBox combo)
         {
-            IServicioTipoDeEnvase servicio = new ServicioTipoDeEnvase();
+            //IServicioTipoDeEnvase servicio = new ServicioTipoDeEnvase();
+            IServicioTipoDeEnvase servicio = DI.Create<IServicioTipoDeEnvase>();
             List<TipoDeEnvase> lista = servicio.GetLista();
             TipoDeEnvase defaultTipo = new TipoDeEnvase()
             {

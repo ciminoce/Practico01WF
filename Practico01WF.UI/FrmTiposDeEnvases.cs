@@ -16,9 +16,10 @@ namespace Practico01WF.UI
 {
     public partial class FrmTiposDeEnvases : Form
     {
-        public FrmTiposDeEnvases()
+        public FrmTiposDeEnvases(IServicioTipoDeEnvase servicio)
         {
             InitializeComponent();
+            _servicio = servicio;
         }
 
         private void tsbCerrar_Click(object sender, EventArgs e)
@@ -26,16 +27,16 @@ namespace Practico01WF.UI
             Close();
         }
 
-        private IServicioTipoDeEnvase servicio;
+        private readonly IServicioTipoDeEnvase _servicio;
         private List<TipoDeEnvase> lista;
         private int cantidadRegistros;
         private void FrmTiposDeEnvases_Load(object sender, EventArgs e)
         {
-            servicio = new ServicioTipoDeEnvase();
+            //servicio = new ServicioTipoDeEnvase();
             try
             {
-                lista = servicio.GetLista();
-                cantidadRegistros = servicio.GetCantidad();
+                lista = _servicio.GetLista();
+                cantidadRegistros = _servicio.GetCantidad();
                 MostrarDatosEnGrilla();
 
             }
@@ -71,16 +72,16 @@ namespace Practico01WF.UI
                 try
                 {
                     TipoDeEnvase tipoDeEnvase = frm.GetTipo();
-                    if (servicio.Existe(tipoDeEnvase))
+                    if (_servicio.Existe(tipoDeEnvase))
                     {
                         MessageBox.Show("Tipo de Planta existente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    servicio.Guardar(tipoDeEnvase);
+                    _servicio.Guardar(tipoDeEnvase);
                     DataGridViewRow r = HelperGrid.CrearFila(DatosDataGridView);
                     HelperGrid.SetearFila(r, tipoDeEnvase);
                     HelperGrid.AgregarFila(DatosDataGridView, r);
-                    cantidadRegistros = servicio.GetCantidad();
+                    cantidadRegistros = _servicio.GetCantidad();
                     MessageBox.Show("Registro guardado", "Mensaje",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -112,14 +113,14 @@ namespace Practico01WF.UI
             try
             {
                 tipoDeEnvase = frm.GetTipo();
-                if (servicio.Existe(tipoDeEnvase))
+                if (_servicio.Existe(tipoDeEnvase))
                 {
                     HelperGrid.SetearFila(r, tipoDeEnvaseCopia);
                     MessageBox.Show("Tipo de Planta existente", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                servicio.Guardar(tipoDeEnvase);
+                _servicio.Guardar(tipoDeEnvase);
                 HelperGrid.SetearFila(r, tipoDeEnvase);
                 MessageBox.Show("Registro Editado", "Mensaje",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -153,7 +154,7 @@ namespace Practico01WF.UI
 
             try
             {
-                servicio.Borrar(tipoDeEnvase.TipoDeEnvaseId);
+                _servicio.Borrar(tipoDeEnvase.TipoDeEnvaseId);
                 HelperGrid.BorrarFila(DatosDataGridView, r);
 
                 MessageBox.Show("Registro borrado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);

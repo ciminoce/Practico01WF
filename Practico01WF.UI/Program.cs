@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Practico01WF.UI.Ninject;
 
 namespace Practico01WF.UI
 {
@@ -14,6 +15,7 @@ namespace Practico01WF.UI
         [STAThread]
         static void Main()
         {
+            DI.Inicialize();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FrmPrincipal());

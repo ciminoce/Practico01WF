@@ -17,17 +17,18 @@ namespace Practico01WF.UI
 {
     public partial class FrmBuscarPorTipoDePlanta : Form
     {
-        public FrmBuscarPorTipoDePlanta()
+        public FrmBuscarPorTipoDePlanta(IServicioTipoDePlanta servicio)
         {
             InitializeComponent();
+            _servicio = servicio;
         }
 
-        private IServicioTipoDePlanta servicio;
+        private readonly IServicioTipoDePlanta _servicio;
         private List<IGrouping<int, Planta>> grupo;
         private void FrmBuscarPorTipoDePlanta_Load(object sender, EventArgs e)
         {
-            servicio = new ServicioTipoDePlanta();
-            grupo = servicio.GetGrupo();
+            //servicio = new ServicioTipoDePlanta();
+            grupo = _servicio.GetGrupo();
             PopulateTreeView();//Llenar el treeview
         }
 
@@ -41,7 +42,7 @@ namespace Practico01WF.UI
             //Recorrer el grupo recibido
             foreach (var g in grupo)
             {
-                var tipo = servicio.GetTipoDePlantaPorId(g.Key);//busco el tipo de planta
+                var tipo = _servicio.GetTipoDePlantaPorId(g.Key);//busco el tipo de planta
                 TreeNode nodoTipo = new TreeNode($"{tipo.Descripcion} - Cantidad={g.Count()}");//creo el nodo
                 nodoTipo.Tag = tipo;
                 foreach (var planta in g)//Recorro el detalle de plantas agrupadas

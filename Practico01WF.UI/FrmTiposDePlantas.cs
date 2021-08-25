@@ -11,14 +11,16 @@ using Practico01WF.Entidades;
 using Practico01WF.Servicios.Servicios;
 using Practico01WF.Servicios.Servicios.Facades;
 using Practico01WF.UI.Helpers;
+using Practico01WF.UI.Ninject;
 
 namespace Practico01WF.UI
 {
     public partial class FrmTiposDePlantas : Form
     {
-        public FrmTiposDePlantas()
+        public FrmTiposDePlantas(IServicioTipoDePlanta servicio)
         {
             InitializeComponent();
+            _servicio = servicio;
         }
 
         private void tsbCerrar_Click(object sender, EventArgs e)
@@ -26,16 +28,16 @@ namespace Practico01WF.UI
             Close();
         }
 
-        private IServicioTipoDePlanta servicio;
+        private readonly IServicioTipoDePlanta _servicio;
         private List<TipoDePlanta> lista;
         private int cantidadRegistros;
         private void FrmTiposDePlantas_Load(object sender, EventArgs e)
         {
-            servicio = new ServicioTipoDePlanta();
+            //servicio = new ServicioTipoDePlanta();
             try
             {
-                lista = servicio.GetLista();
-                cantidadRegistros = servicio.GetCantidad();
+                lista = _servicio.GetLista();
+                cantidadRegistros = _servicio.GetCantidad();
                 MostrarDatosEnGrilla();
 
             }
@@ -71,16 +73,16 @@ namespace Practico01WF.UI
                 try
                 {
                     TipoDePlanta tipoDePlanta = frm.GetTipo();
-                    if (servicio.Existe(tipoDePlanta))
+                    if (_servicio.Existe(tipoDePlanta))
                     {
                         MessageBox.Show("Tipo de Planta existente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    servicio.Guardar(tipoDePlanta);
+                    _servicio.Guardar(tipoDePlanta);
                     DataGridViewRow r = HelperGrid.CrearFila(DatosDataGridView);
                     HelperGrid.SetearFila(r, tipoDePlanta);
                     HelperGrid.AgregarFila(DatosDataGridView,r);
-                    cantidadRegistros = servicio.GetCantidad();
+                    cantidadRegistros = _servicio.GetCantidad();
                     MessageBox.Show("Registro guardado", "Mensaje",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -112,14 +114,14 @@ namespace Practico01WF.UI
             try
             {
                 tipoDePlanta = frm.GetTipo();
-                if (servicio.Existe(tipoDePlanta))
+                if (_servicio.Existe(tipoDePlanta))
                 {
                     HelperGrid.SetearFila(r, tipoDePlantaCopia);
                     MessageBox.Show("Tipo de Planta existente", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                servicio.Guardar(tipoDePlanta);
+                _servicio.Guardar(tipoDePlanta);
                 HelperGrid.SetearFila(r,tipoDePlanta);
                 MessageBox.Show("Registro Editado", "Mensaje",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -153,7 +155,7 @@ namespace Practico01WF.UI
 
             try
             {
-                servicio.Borrar(tipoDePlanta.TipoDePlantaId);
+                _servicio.Borrar(tipoDePlanta.TipoDePlantaId);
                 HelperGrid.BorrarFila(DatosDataGridView, r);
                
                 MessageBox.Show("Registro borrado", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -166,7 +168,9 @@ namespace Practico01WF.UI
 
         private void tsbBuscar_Click(object sender, EventArgs e)
         {
-            FrmBuscarPorTipoDePlanta frm = new FrmBuscarPorTipoDePlanta() {Text = "Totales por Tipo de Planta"};
+            FrmBuscarPorTipoDePlanta frm =
+                new FrmBuscarPorTipoDePlanta(DI.Create<IServicioTipoDePlanta>())
+                    {Text = "Totales por Tipo de Planta"};
             frm.ShowDialog(this);
         }
 
